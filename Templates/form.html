@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>Registro de Operaciones</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script 
+        src="https://cdn.example.com/v5.3.6/script.js"
+        integrity="sha384-oqVuAfXRKap7fdgcCY5uykM6+R9GqQ8K/uxy9rx7HNQlGYl1kPzQho1wx4JwY8wC"
+        ></script>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+        <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+    
+        h1 {
+            text-align: center;
+            color: #0056b3;
+            margin-top: 20px;
+        }
+    
+        form {
+            max-width: 400px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+    
+        input, select, button {
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+    
+        input:focus, select:focus, button:focus {
+            outline: none;
+            border-color: #0056b3;
+        }
+    
+        button {
+            background-color: #0056b3;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+    
+        button:hover {
+            background-color: #003d82;
+        }
+    
+        /* Diseño adaptable */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+    
+            form {
+                padding: 15px;
+            }
+        }
+        .seccion-bloque {
+            margin-top: 30px;
+            padding: 15px;
+            background: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+        }
+    
+        .seccion-bloque h3 {
+            margin-top: 0;
+            color: #0056b3;
+            font-size: 20px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+    
+        .seccion-bloque label {
+            display: block;
+            margin-top: 10px;
+            font-weight: normal;
+        }
+    </style>
+    </head>
+    <body>
+        <h1>Registrar Operación</h1>
+        <form action="/guardar" method="POST" id="registroForm">
+            <label for="fecha">Fecha:</label>
+            <input type="date" name="fecha" required><br>
+    
+            <label for="hora">Hora:</label>
+            <input type="time" name="hora" required><br>
+    
+            <label for="colegio">Colegio:</label>
+            <select name="colegio" id="colegio" required>
+                <option value="">Selecciona un colegio</option>
+                {% for colegio in colegios %}
+                    <option value="{{ colegio[0] }}">{{ colegio[1] }}</option>
+                {% endfor %}
+            </select><br>
+    
+            <label for="prenda">Prenda:</label>
+            <select name="prenda" id="prenda" required>
+                <option value="">Selecciona una prenda</option>
+            </select><br>
+    
+            <label for="operacion">Operación:</label>
+            <select name="operacion" id="operacion" required>
+                <option value="">Selecciona una operación</option>
+            </select><br>
+    
+            <label for="cantidad">Cantidad:</label>
+            <input type="number" name="cantidad" required><br>
+    
+            <label for="operario">Operario:</label>
+            <select name="operario" id="operario">
+            <option value="">Seleccione el operario</option> 
+        <option value="Brayan">Brayan</option>
+        <option value="Oscar">Oscar</option>
+        <option value="Jovana">Jovana</option>
+        </select><br>
+    <!-- HORAS EXTRAS -->
+    <div class="seccion-bloque">
+        <h3>Horas Extras</h3>
+        <label><input type="checkbox" id="activar_extras"> Incluir horas extras</label>
+        <div id="horas_extras_fields" style="display:none;">
+            <label for="horas_diurnas">Horas extra diurnas:</label>
+            <input type="number" name="horas_diurnas" id="horas_diurnas" value="0"><br>
+    
+            <label for="horas_nocturnas">Horas extra nocturnas:</label>
+            <input type="number" name="horas_nocturnas" id="horas_nocturnas" value="0"><br>
+    
+            <label for="horas_festivas_dia">Horas extra festivo diurno:</label>
+            <input type="number" name="horas_festivas_dia" id="horas_festivas_dia" value="0"><br>
+    
+            <label for="horas_festivas_noche">Horas extra festivo nocturno:</label>
+            <input type="number" name="horas_festivas_noche" id="horas_festivas_noche" value="0"><br>
+    
+            <label for="horas_dominicales">Horas extra dominicales:</label>
+            <input type="number" name="horas_dominicales" id="horas_dominicales" value="0"><br>
+        </div>
+    </div>
+    
+    <!-- INCAPACIDADES -->
+    <div class="seccion-bloque">
+        <h3>Incapacidades</h3>
+        <label><input type="checkbox" id="activar_incapacidad"> Incluir incapacidad</label>
+        <div id="incapacidad_fields" style="display:none;">
+            <label for="tipo_incapacidad">Tipo de incapacidad:</label>
+            <select name="tipo_incapacidad" id="tipo_incapacidad">
+                <option value="ninguna">Ninguna</option>
+                <option value="comun">Enfermedad común</option>
+                <option value="laboral">Accidente/enfermedad laboral</option>
+                <option value="maternidad">Maternidad</option>
+                <option value="paternidad">Paternidad</option>
+            </select><br>
+    
+            <label for="dias_incapacidad">Días de incapacidad:</label>
+            <input type="number" name="dias_incapacidad" id="dias_incapacidad" value="0"><br>
+        </div>
+    </div>
+    
+    <!-- VACACIONES -->
+    <div class="seccion-bloque">
+        <h3>Vacaciones</h3>
+        <label><input type="checkbox" id="activar_vacaciones"> Incluir vacaciones</label>
+        <div id="vacaciones_fields" style="display:none;">
+            <label for="fecha_ingreso">Fecha de ingreso:</label>
+            <input type="date" name="fecha_ingreso" id="fecha_ingreso"><br>
+    
+            <label for="fecha_corte">Fecha de corte:</label>
+            <input type="date" name="fecha_corte" id="fecha_corte"><br>
+        </div>
+    </div>
+     <button type="submit">Guardar</button>
+    </form>
+    
+    <script>
+     $(document).ready(function () {
+         // Actualizar prendas
+         $('#colegio').change(function () {
+             const colegioId = $(this).val();
+             $('#prenda').html('<option value="">Selecciona una prenda</option>');
+             $('#operacion').html('<option value="">Selecciona una operación</option>');
+    
+             if (colegioId) {
+                 $.get(`/prendas/${colegioId}`, function (data) {
+                     data.forEach(function (prenda) {
+                         $('#prenda').append(`<option value="${prenda[0]}">${prenda[1]}</option>`);
+                     });
+                 });
+             }
+         });
+    
+         // Actualizar operaciones
+         $('#prenda').change(function () {
+             const prendaId = $(this).val();
+             $('#operacion').html('<option value="">Selecciona una operación</option>');
+    
+             if (prendaId) {
+                 $.get(`/operaciones/${prendaId}`, function (data) {
+                     data.forEach(function (operacion) {
+                         $('#operacion').append(`<option value="${operacion[0]}">${operacion[1]} - $${operacion[2]}</option>`);
+                     });
+                 });
+             }
+         });
+    
+         // Mostrar/Ocultar horas extras
+         $('#activar_extras').change(function () {
+             $('#horas_extras_fields').toggle(this.checked);
+         });
+    
+         // Mostrar/Ocultar incapacidades
+         $('#activar_incapacidad').change(function () {
+             $('#incapacidad_fields').toggle(this.checked);
+         });
+    
+         // Mostrar/Ocultar vacaciones
+         $('#activar_vacaciones').change(function () {
+             $('#vacaciones_fields').toggle(this.checked);
+         });
+    
+         // Operario a minúscula (por si lo conviertes a input más adelante)
+         $('#registroForm').submit(function () {
+             const operarioInput = $('input[name="operario"]');
+             if (operarioInput.length) {
+                 operarioInput.val(operarioInput.val().toLowerCase());
+             }
+         });
+     });
+    </script>
+    </body>
+    </html>

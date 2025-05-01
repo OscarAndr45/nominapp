@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Registro Guardado</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .success-container {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            color: #333333;
+        }
+
+        .success-container h1 {
+            font-size: 1.5rem;
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+
+        .success-container p {
+            font-size: 1rem;
+            margin: 10px 0;
+        }
+
+        .success-container .button {
+            display: inline-block;
+            background-color: #007BFF;
+            color: #ffffff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .success-container .button:hover {
+            background-color: #0056b3;
+            color: #ffffff;
+        }
+
+        @media (max-width: 600px) {
+            .success-container {
+                padding: 15px;
+            }
+
+            .success-container h1 {
+                font-size: 1.2rem;
+            }
+
+            .success-container p {
+                font-size: 0.9rem;
+            }
+
+            .success-container .button {
+                font-size: 0.9rem;
+                padding: 8px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <h1>¡Registro exitoso!</h1>
+        <p><strong>Operario:</strong> {{ operario }}</p>
+        <p><strong>Total calculado:</strong> ${{ "{:,.2f}".format(total) }}</p>
+        <p><strong>Valor horas extras:</strong> ${{ "{:,.2f}".format(valor_extras) }}</p>
+        <p><strong>Valor incapacidades:</strong> ${{ "{:,.2f}".format(valor_incapacidad) }}</p>
+        <p><strong>Valor vacaciones:</strong> ${{ "{:,.2f}".format(valor_vacaciones) }}</p>
+        <p><strong>Fecha del registro:</strong> {{ fecha }}</p>
+        <a href="/" class="button">Volver al formulario</a>
+    </div>
+</body>
+</html>
